@@ -1,0 +1,41 @@
+xtrabackup
+----------
+
+This is the xtrabackup module, to configure the wonderful Percona 
+xtrabackup utility to make non-blocking backups
+
+
+Usage
+-----
+
+You will need to specify credentials for a user with suitable credentials;
+see 
+http://www.percona.com/doc/percona-xtrabackup/innobackupex/privileges.html#permissions-and-privileges-needed
+for further details
+
+This module creates 'streaming' backups in the xbstream format, by default
+compressed.  Before you can restore, **you must run prepare**.
+A restore script, /usr/local/bin/mysql-backup-restore is provided which will
+do this for you.
+
+License
+-------
+
+GNU GPL v2
+
+
+Contact
+-------
+
+www.bashton.com
+
+
+Support
+-------
+
+Please raise an issue on the github project page:
+
+https://github.com/BashtonLtd/puppet-xtrabackup
+
+Paid support  and consultancy for all Bashton Ltd Open Source projects 
+and more besides is available; please see http://www.bashton.com/support/

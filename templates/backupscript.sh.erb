@@ -1,0 +1,48 @@
+#!/bin/bash -e
+#
+# This file is managed by Puppet.  Edit the template, not the file on disk.
+# (C) 2013 Bashton Ltd
+
+DATE=$( date +%Y-%m-%d )
+
+OPTS="--stream=xbstream --user=<%= dbuser %> --password=<%= dbpass %> --parallel=<%= parallel %>"
+
+<% if @sshdest -%>
+  SSHCMD="ssh <%= sshdest%>"
+  <% if @sshkey -%>
+    SSHCMD="$SSHCMD -i <%= sshkey %>"
+  <% end -%>
+<% end -%>
+
+OPTS="$OPTS <%= workdir %>"
+<% if @slaveinfo -%>
+  OPTS="$OPTS --slave-info"
+<% end -%>
+<% if @safeslave -%>
+  OPTS="$OPTS --safe-slave-backup"
+<% end -%>
+<% if @gzip -%>
+  OUTFILE="<%= outputdir %>/mysql-backup-${DATE}.xbstream.gz"
+<% else -%>
+  OUTFILE="<%= outputdir %>/mysql-backup-${DATE}.xbstream"
+<% end -%>
+<% if @sshdest -%>
+  /usr/bin/innobackupex $OPTS | 
+  <% if @gzip -%> gzip -c9 |<% end -%>
+  $SSHCMD "cat - > $OUTFILE"
+<% else -%>
+  <% if @gzip -%>
+    /usr/bin/innobackupex $OPTS | gzip -c9 > $OUTFILE
+  <% else -%>
+    /usr/bin/innobackupex $OPTS > $OUTFILE
+  <% end -%>
+<% end -%>
+<% if @keepdays -%>
+  DELCMD="$SSHCMD find <%= outputdir %> -name 'mysql-backup-*.xbstream' 
+          -type f -mtime +<%= keepdays %> -depth 1 -delete"
+  <% if @sshdest -%>
+    ssh <%= sshdest %> "$DELCMD"
+  <% else -%>
+    $DELCMD
+  <% end -%>
+<% end -%>
