@@ -1,5 +1,5 @@
 name    'bashtoni-xtrabackup'
-version '0.0.1'
+version '0.0.2'
 author 'Sam Bashton'
 license 'GNU GPL, Version 2.0'
 summary 'Configure and schedule MySQL backups with Percona Xtrabackup'

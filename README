@@ -18,6 +18,17 @@ compressed.  Before you can restore, **you must run prepare**.
 A restore script, /usr/local/bin/mysql-backup-restore is provided which will
 do this for you.
 
+class { "xtrabackup":
+  dbuser    => "root",
+  dbpass    => "rootdbpass",
+  hour      => 3,
+  minute    => 0,
+  keeydays  => 14,
+  workdir   => "/root/backupworkdir",
+  outputdir => "/mnt/nfs/mysqlbackups",
+}
+
+
 License
 -------
 

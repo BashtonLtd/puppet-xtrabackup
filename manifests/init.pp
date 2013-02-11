@@ -56,12 +56,12 @@
 #  A simple example which takes backups at 3am every morning, creates compressed
 #  backups on a locally mounted volume and stores them for two weeks:
 #
-#  class { xtrabackup:
+#  class { "xtrabackup":
 #    dbuser    => "root",
 #    dbpass    => "rootdbpass",
 #    hour      => 3,
 #    minute    => 0,
-#    keeydays  => 14,
+#    keepdays  => 14,
 #    workdir   => "/root/backupworkdir",
 #    outputdir => "/mnt/nfs/mysqlbackups",
 #  }

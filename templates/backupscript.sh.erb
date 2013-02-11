@@ -39,7 +39,7 @@ OPTS="$OPTS <%= workdir %>"
 <% end -%>
 <% if @keepdays -%>
   DELCMD="$SSHCMD find <%= outputdir %> -name 'mysql-backup-*.xbstream' 
-          -type f -mtime +<%= keepdays %> -depth 1 -delete"
+          -type f -mtime +<%= keepdays %> -maxdepth 1 -delete"
   <% if @sshdest -%>
     ssh <%= sshdest %> "$DELCMD"
   <% else -%>
