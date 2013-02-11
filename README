@@ -18,15 +18,18 @@ compressed.  Before you can restore, **you must run prepare**.
 A restore script, /usr/local/bin/mysql-backup-restore is provided which will
 do this for you.
 
-class { "xtrabackup":
-  dbuser    => "root",
-  dbpass    => "rootdbpass",
-  hour      => 3,
-  minute    => 0,
-  keeydays  => 14,
-  workdir   => "/root/backupworkdir",
-  outputdir => "/mnt/nfs/mysqlbackups",
-}
+    class { "xtrabackup":
+      dbuser    => "root",
+      dbpass    => "rootdbpass",
+      hour      => 3,
+      minute    => 0,
+      keepdays  => 14,
+      workdir   => "/root/backupworkdir",
+      outputdir => "/mnt/nfs/mysqlbackups",
+    }
+
+Please note that due to a bug in xtrabackup, your MySQL my.cnf **must** specify datadir.  If it doesn't,
+you should add datadir = /var/lib/mysql to the [mysqld] section.
 
 
 License
