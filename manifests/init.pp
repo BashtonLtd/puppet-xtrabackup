@@ -50,6 +50,10 @@
 #   Whether to add the Percona repositories.  Only supported for RedHat presently.
 #   Enabled by default, pass 'false' to disable.
 #   (Optional, enabled by default)
+# [*install_20*]
+#   Whether to install Xtrabackup 2.0; if set to false installs the latest (2.1)
+#   instead.
+#   (Optional, disabled by default)
 #
 # === Examples
 #
@@ -87,7 +91,8 @@ class xtrabackup ($dbuser,             # Database username
                   $parallel  = 1,      # Threads to use
                   $slaveinfo = undef,  # Record master log pos if true
                   $safeslave = undef,  # Disconnect clients from slave
-                  $addrepo   = true    # Add the Percona yum/apt repo
+                  $addrepo   = true,   # Add the Percona yum/apt repo
+                  $install_20 = false  # Install 2.0 instead of latest
                  ) {
 
   if ($addrepo) {
@@ -104,8 +109,15 @@ class xtrabackup ($dbuser,             # Database username
       }
   }
 
-  package { "percona-xtrabackup":
-    ensure => installed,
+  if ($install_20) {
+    package { "percona-xtrabackup-20":
+      ensure => installed,
+    }
+  }
+  else {
+    package { "percona-xtrabackup":
+      ensure => installed,
+    }
   }
 
   file { "/usr/local/bin/mysql-backup":
