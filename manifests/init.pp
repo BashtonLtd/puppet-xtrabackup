@@ -94,6 +94,7 @@ class xtrabackup ($dbuser,             # Database username
       if ($osfamily == "RedHat") {
         yumrepo { "percona":
           name     => "Percona-Repository",
+          descr    => "Percona Repository",
           gpgkey   => "http://www.percona.com/downloads/RPM-GPG-KEY-percona",
           gpgcheck => "1",
           baseurl  => 'http://repo.percona.com/centos/$releasever/os/$basearch/',
