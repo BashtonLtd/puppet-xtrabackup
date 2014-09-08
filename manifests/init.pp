@@ -105,9 +105,7 @@ class xtrabackup ($dbuser,             # Database username
       }
   }
 
-  package { "percona-xtrabackup":
-    ensure => installed,
-  }
+  ensure_packages(['percona-xtrabackup'])
 
   file { "/usr/local/bin/mysql-backup":
     owner   => "root",
