@@ -5,16 +5,16 @@
 
 DATE=$( date +%Y-%m-%d )
 
-OPTS="--stream=xbstream --user=<%= dbuser %> --password=<%= dbpass %> --parallel=<%= parallel %>"
+OPTS="--stream=xbstream --user=<%= @dbuser %> --password=<%= @dbpass %> --parallel=<%= @parallel %>"
 
 <% if @sshdest -%>
-  SSHCMD="ssh <%= sshdest%>"
+  SSHCMD="ssh <%= @sshdest%>"
   <% if @sshkey -%>
-    SSHCMD="$SSHCMD -i <%= sshkey %>"
+    SSHCMD="$SSHCMD -i <%= @sshkey %>"
   <% end -%>
 <% end -%>
 
-OPTS="$OPTS <%= workdir %>"
+OPTS="$OPTS <%= @workdir %>"
 <% if @slaveinfo -%>
   OPTS="$OPTS --slave-info"
 <% end -%>
@@ -22,9 +22,9 @@ OPTS="$OPTS <%= workdir %>"
   OPTS="$OPTS --safe-slave-backup"
 <% end -%>
 <% if @gzip -%>
-  OUTFILE="<%= outputdir %>/mysql-backup-${DATE}.xbstream.gz"
+  OUTFILE="<%= @outputdir %>/mysql-backup-${DATE}.xbstream.gz"
 <% else -%>
-  OUTFILE="<%= outputdir %>/mysql-backup-${DATE}.xbstream"
+  OUTFILE="<%= @outputdir %>/mysql-backup-${DATE}.xbstream"
 <% end -%>
 <% if @sshdest -%>
   /usr/bin/innobackupex $OPTS | 
@@ -38,5 +38,5 @@ OPTS="$OPTS <%= workdir %>"
   <% end -%>
 <% end -%>
 <% if @keepdays -%>
-  $SSHCMD find <%= outputdir %> -maxdepth 1 -name 'mysql-backup-*.xbstream*' -type f -mtime +<%= keepdays %> -delete
+  $SSHCMD find <%= @outputdir %> -maxdepth 1 -name 'mysql-backup-*.xbstream*' -type f -mtime +<%= @keepdays %> -delete
 <% end -%>
