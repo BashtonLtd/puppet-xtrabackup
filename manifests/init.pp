@@ -81,8 +81,8 @@
 #
 class xtrabackup ($dbuser,             # Database username
                   $dbpass,             # Database password
-                  $hour,               # Cron hour
-                  $minute,             # Cron minute
+                  $hour      = undef,  # Cron hour
+                  $minute    = undef,  # Cron minute
                   $workdir   = '/tmp', # Working directory
                   $outputdir,          # Directory to output to
                   $sshdest   = undef,  # SSH destination
@@ -128,6 +128,9 @@ class xtrabackup ($dbuser,             # Database username
   }
 
   if $cronjob {
+    if ( !$hour or !$minute ) {
+      fail('Hour and minute parameters are mandatory when cronjob is true.')
+    }
     cron { 'xtrabackup':
       command => '/usr/local/bin/mysql-backup',
       hour    => $hour,
