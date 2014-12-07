@@ -3,26 +3,21 @@
 XBSTREAM=$1
 DESTDIR=$2
 
-if [ x${XBSTREAM} == "x" ] || [ x${DESTDIR} == "x" ]; then
-  echo "Usage: $0 <xbstream backup> <destination directory>"
+if [[ -z "$XBSTREAM" || -z "$DESTDIR" ]]; then
+  echo "Usage: $0 <xbstream backup> <destination directory>" >&2
   exit 1
 fi
 
-if [ ! -f $XBSTREAM ]; then
-  echo "Can't find backup $XBSTREAM"
+if [[ ! -f "$XBSTREAM" ]]; then
+  echo "Can't find backup $XBSTREAM" >&2
   exit 1
 fi
-if [ -d $DESTDIR ]; then
-  echo "Destination $DESTDIR already exists; will not overwrite"
+if [[ -d "$DESTDIR" ]]; then
+  echo "Destination $DESTDIR already exists; will not overwrite" >&2
   exit 1
 fi
 
-mkdir -p $DESTDIR
+mkdir -p "$DESTDIR"
 
-<% if @gzip -%>
-  gzip -cd $XBSTREAM |
-<% else -%>
-  cat $XBSTREAM |
-<% end -%>
-xbstream -x -C $DESTDIR
-innobackupex --apply-log $DESTDIR
+<%= @gzip ? "gzip -cd" : "cat" %> "$XBSTREAM" | xbstream -x -C "$DESTDIR"
+innobackupex --apply-log "$DESTDIR"
