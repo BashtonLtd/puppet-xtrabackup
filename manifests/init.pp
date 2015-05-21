@@ -83,22 +83,22 @@
 #
 # Copyright 2013 Bashton Ltd
 #
-class xtrabackup ($dbuser,             # Database username
-                  $dbpass,             # Database password
-                  $hour      = undef,  # Cron hour
-                  $minute    = undef,  # Cron minute
-                  $workdir   = '/tmp', # Working directory
-                  $outputdir,          # Directory to output to
-                  $sshdest   = undef,  # SSH destination
-                  $sshkey    = undef,  # SSH private key to use
-                  $keepdays  = undef,  # Keep the last x days of backups
-                  $gzip      = true,   # Compress using gzip
-                  $parallel  = 1,      # Threads to use
-                  $slaveinfo = undef,  # Record master log pos if true
-                  $safeslave = undef,  # Disconnect clients from slave
-                  $addrepo   = true,   # Add the Percona yum/apt repo
-                  $cronjob   = true,   # Install a cron job
-                  $install_20 = false  # Install 2.0 instead of latest
+class xtrabackup ($dbuser,              # Database username
+                  $dbpass,              # Database password
+                  $hour       = undef,  # Cron hour
+                  $minute     = undef,  # Cron minute
+                  $workdir    = '/tmp', # Working directory
+                  $outputdir,           # Directory to output to
+                  $sshdest    = undef,  # SSH destination
+                  $sshkey     = undef,  # SSH private key to use
+                  $keepdays   = undef,  # Keep the last x days of backups
+                  $gzip       = true,   # Compress using gzip
+                  $parallel   = 1,      # Threads to use
+                  $slaveinfo  = undef,  # Record master log pos if true
+                  $safeslave  = undef,  # Disconnect clients from slave
+                  $addrepo    = true,   # Add the Percona yum/apt repo
+                  $cronjob    = true,   # Install a cron job
+                  $install_20 = false,  # Install 2.0 instead of latest
                  ) {
 
   if ($addrepo) {
